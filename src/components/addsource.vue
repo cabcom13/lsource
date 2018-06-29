@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    {{authors_str}}
 <v-container grid-list-lg >
     <v-card>
         <v-toolbar flat>
@@ -79,16 +80,18 @@
                                 </v-card>
                             </v-dialog>
                         <v-layout row wrap v-for="(author,i) of authors" :key="i">
-                            <v-flex xs6>
+                            <v-flex xs5>
                                 <v-text-field 
                                     v-model="author.name"
                                     label="Name des/der AutorIn / des/der HerausgeberIn"
                                     value=""
                                 ></v-text-field>
                             </v-flex>
+                            <v-flex xs1>
+                              
+                            </v-flex>
                             <v-flex xs5>
-                                <v-text-field 
-                                
+                                <v-text-field                                
                                     v-model="author.prename"
                                     label="Vorname"
                                     value=""
@@ -169,7 +172,17 @@ export default {
    
   },
   computed: {
-
+      authors_str(){
+         let str = ''; 
+         this.authors.map(function(value, key) {
+             console.log(value.name)
+            if(value.name && value.prename){
+                str += value.name +', '+ value.prename+'; ';
+            }
+            
+         });
+         return str.slice(0, -2);
+      }
   },
   methods: {
         doISBNSerach(){
@@ -202,7 +215,20 @@ export default {
             console.log(volumeInfo.authors)
       },
       save(){
-         console.log(this.authors.join())   
+         db.collection('sources').add({
+
+                type:this.sourcetyp,
+                titel:this.titel,
+                author: this.authors_str,
+                erscheinungsjahr: this.erscheinungsjahr,
+                untertitel:this.untertitel,
+                auflage:this.auflage,
+                erscheinungsort: this.erscheinungsort,
+                verlag:this.verlag,
+                sort:10
+            }).then(function() {
+                console.log("Document successfully written!");
+            });
       },
       addauthor(){
         this.authors.push({ name: '', prename:'' })

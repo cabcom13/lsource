@@ -40,18 +40,25 @@ export default {
   },
   methods: {
 
-    convertHashTags: function(str) {
+    convertHashTags(str) {
     
       let _str = (this.ds.datatyps[str.type]);
-      if (this.ds.datatyps != 'undefined'){
+      if(!_str) return
       _str.toLowerCase();
       if (_str){ 
         //   {([\w]+)}
         //  /#([\w]+)/g
-        return _str.replace(/{([\w]+)}/g, function(match, p1){
-          
+        //{(.*?)([\w]+)(.*?)}
+        //{([\w]+)}
+        return _str.replace(/{(.*?)([\w]+)(.*?)}/g, function(match, p1,p2,p3){
+            let tmp = '';
             if(match){
-                return str[p1]
+              
+              if(str[p2]){
+                  tmp = p1+str[p2]+p3
+              }
+
+                return tmp;
             } else {
               
               return false
@@ -59,9 +66,7 @@ export default {
             
         });
         }
-      } else {
-        return false
-      }
+ 
 
     }
   
