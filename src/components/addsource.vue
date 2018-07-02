@@ -1,24 +1,15 @@
 <template>
   <div class="hello">
-    {{authors_str}}
+<v-toolbar flat dense color="blue accent-1">
+    <span class="tpt">Quelle hinzufügen</span>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat dense @click="save()">Speichern</v-btn>
+
+    </v-toolbar-items>
+</v-toolbar>
 <v-container grid-list-lg >
     <v-card>
-        <v-toolbar flat>
-            <v-toolbar-title>Quelle hinzufügen</v-toolbar-title>
-            <v-spacer></v-spacer>
-           
-                <v-btn
-                
-                @click="save"
-                icon
-                large
-                target="_blank"
-                >
-                <v-icon large>save</v-icon>
-                </v-btn>
-          
-            
-        </v-toolbar>
         <v-card-text>
             <form @submit.prevent="getFormValues">
  

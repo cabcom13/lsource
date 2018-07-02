@@ -1,6 +1,11 @@
 <template>
   <div class="hello">
+<v-toolbar flat dense color="blue accent-1">
+    <span class="tpt">Alle Quellen</span>
+    <v-spacer></v-spacer>
 
+</v-toolbar>
+<v-container>
     <div v-for="location in locations" :key="location.id" class="mb-3">
       <div v-if="convertHashTags(location)">
        
@@ -8,7 +13,7 @@
     
       </div>
     </div>
-
+</v-container>
   </div>
 </template>
 

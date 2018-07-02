@@ -1,14 +1,25 @@
 <template>
   <div class="hello">
+<v-toolbar flat dense color="blue accent-1">
+    <span class="tpt">Typvorlagen bearbeiten</span>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat dense @click="save(ds)">Speichern</v-btn>
 
+    </v-toolbar-items>
+</v-toolbar>
 <v-container grid-list-lg >
     <div v-for="(da, key) of ds.datatyps" :key="key">
         <v-layout row warp>
         <v-flex xs12>
-            <v-card>
+            <v-card >
+                <v-toolbar flat dense color="blue-grey lighten-4">
+                    <v-toolbar-title v-if="key == 'book'" style="font-size:1.1rem;">Aufnahme von Büchern/Monografien ({{key}})</v-toolbar-title>
+                    <v-toolbar-title v-if="key == 'media'" style="font-size:1.1rem;">Aufnahme von Büchern/Monografien ({{key}})</v-toolbar-title>
+
+                </v-toolbar>
                 <v-card-text>
                     <div>
-                        <h5 v-if="key == 'book'">Aufnahme von Büchern/Monografien ({{key}})</h5>
                         <codemirror v-model="ds.datatyps[key]"  :options="editorOption"></codemirror>
                     </div>
                 </v-card-text>
@@ -17,8 +28,6 @@
         </v-flex>
         </v-layout> 
     </div>
-
-<v-btn @click="save(ds)">Speichern</v-btn>
 
 </v-container>
    
@@ -76,9 +85,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
-h5{
-    
+<style scoped>
+header{
+    background:red;
+    height:45px;
+}
+.tbt{
+    text-transform: uppercase;
+    font-size:2rem!important;
+    color:red;
 }
 </style>

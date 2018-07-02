@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 <v-app>
-  <v-navigation-drawer fixed app>
+  <v-navigation-drawer mini-variant fixed app dark color="grey darken-4">
     <v-list dense>
         <v-list-tile ripple to="/">
           <v-list-tile-action>
@@ -29,17 +29,16 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-  <v-toolbar app color="primary" dark flat prominent>
-    <v-toolbar-title>Application</v-toolbar-title>
+  <v-toolbar app  dark flat prominent>
+    <v-toolbar-title>Quellenverwaltung</v-toolbar-title>
 
   </v-toolbar>
   <v-content>
-    <v-container fluid>
 
       <router-view/>
-    </v-container>
+    
   </v-content>
-  <v-footer app></v-footer>
+  <v-footer app dark>Quellenverwaltung 1.0</v-footer>
 </v-app>
   <!--  <img src="./assets/logo.png">-->
 
@@ -61,5 +60,11 @@ export default {
 <style>
 body{
 
+}
+.application .theme--dark.footer, .theme--dark .footer{
+  background:black;
+}
+.application .theme--dark.navigation-drawer, .theme--dark .navigation-drawer{
+  background:black;
 }
 </style>

@@ -1,6 +1,6 @@
 .CodeMirror {
     height: auto;
-
+    border-bottom:1px solid rgba(21,21,21,.2);
 }
 .vue-codemirror-wrap{
    
