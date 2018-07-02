@@ -50,12 +50,33 @@ export default {
         //  /#([\w]+)/g
         //{(.*?)([\w]+)(.*?)}
         //{([\w]+)}
-        return _str.replace(/{(.*?)([\w]+)(.*?)}/g, function(match, p1,p2,p3){
+        //
+
+        //<(\w+)\s?([\s\S]*?)[\s\/]?>(?:([\s\S]*?)<\/\1>)?
+        return _str.replace(/<([\w]+)(.*?)>/gi, function(match, p1,p2,p3){
             let tmp = '';
+           
+
             if(match){
               
-              if(str[p2]){
-                  tmp = p1+str[p2]+p3
+              if(str[p1]){
+                let x ='';
+                  tmp = str[p1]
+                  if(p2){
+
+                    x = p2.replace(/(\w+)(?:=["']?([^"']*)["']?)?/gi, function(match, a1,a2,a3){
+                      if(a1 == 'ap'){
+                        tmp = a2+str[p1]
+                      } 
+                      if(a1 == 'pre'){
+                        tmp += a2
+                      } 
+                    });
+                    
+
+                  }
+                  if(!x)
+                  tmp = str[p1]
               }
 
                 return tmp;
