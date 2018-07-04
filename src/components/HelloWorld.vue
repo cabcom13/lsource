@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-<v-toolbar flat dense color="blue accent-1">
+<v-toolbar flat dense color="blue lighten-3">
     <span class="tpt">Alle Quellen</span>
     <v-spacer></v-spacer>
 
@@ -9,7 +9,7 @@
     <div v-for="location in locations" :key="location.id" class="mb-3">
       <div v-if="convertHashTags(location)">
        
-          <pre v-html="convertHashTags(location)"></pre>
+          <pre>{{convertHashTags(location)}}</pre>
     
       </div>
     </div>
@@ -26,6 +26,7 @@ export default {
   name: 'App',
   data: () => {
     return {
+      active: [],
      locations:[],
      ds:{
        datatyps:[]

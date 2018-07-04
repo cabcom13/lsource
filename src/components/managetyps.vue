@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-<v-toolbar flat dense color="blue accent-1">
+<v-toolbar flat dense color="blue lighten-3">
     <span class="tpt">Typvorlagen bearbeiten</span>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -30,7 +30,11 @@
     </div>
 
 </v-container>
-   
+<div class="infobox">
+Verfügbare Tags:  
+
+
+</div> 
   </div>
 </template>
 
@@ -64,6 +68,9 @@ export default {
     }
 
   },
+computed: {
+
+  },
   methods: {
         onCmReady(cm) {
       console.log('the editor is readied!', cm)
@@ -94,5 +101,10 @@ header{
     text-transform: uppercase;
     font-size:2rem!important;
     color:red;
+}
+.infobox{
+    padding:1rem;
+    background:rgba(21,21,21,.2);
+    height:auto;
 }
 </style>

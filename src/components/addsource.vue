@@ -1,11 +1,10 @@
 <template>
   <div class="hello">
-<v-toolbar flat dense color="blue accent-1">
+<v-toolbar flat dense color="blue lighten-3">
     <span class="tpt">Quelle hinzufügen</span>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat dense @click="save()">Speichern</v-btn>
-
+        <v-btn small flat @click="save()">Speichern</v-btn>
     </v-toolbar-items>
 </v-toolbar>
 <v-container grid-list-lg >
@@ -31,28 +30,24 @@
                             <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
                                 <v-btn slot="activator">ISBN Buchsuche</v-btn>
                                 <v-card>
-                                    <v-toolbar dark color="primary">
+                                    <v-toolbar dark >
                                     <v-btn icon dark @click.native="dialog = false">
                                         <v-icon>close</v-icon>
                                     </v-btn>
-                                    <v-toolbar-title>Settings</v-toolbar-title>
+                                    <v-toolbar-title>Buchsuche</v-toolbar-title>
                       
                                     </v-toolbar>
-                                    <v-container grid-list-md text-xs-center class="mt-3">
-                                            <v-layout row wrap>
-                                                <v-flex xs8>
-                                                    <v-text-field required v-model="ISBNsearchterm" label="Suche..."></v-text-field>
-                                                </v-flex>
-                                                <v-flex xs1>
-                                                    <v-btn @click="doISBNSerach()" :disabled="ISBNsearchterm==''">Suche</v-btn>   
-                                                </v-flex>
-                                            </v-layout>
-                                    </v-container>
-                                     
-                                    
-                                   
+                                    <v-toolbar flat dense color="blue lighten-3">
+                                            <form class="searchform" v-on:submit.prevent="doISBNSerach">
+                                                <input class="toolbar_search" type="text" v-model="ISBNsearchterm" placeholder="Suchbegriff/ISBN Nummer etc."/>
+                                                <v-btn @click="doISBNSerach" :loading="loading" icon flat :disabled="ISBNsearchterm==''"><v-icon>search</v-icon></v-btn>   
+                                            </form>
+                                    </v-toolbar>
+                                  
                                     <v-list two-line>
-                                    <v-subheader >{{res.totalItems}} Ergebnisse </v-subheader>
+                                     
+                                    <v-subheader >Ergebniss(e) </v-subheader>
+                                    <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
                                     <template v-for="(item, index) of res.items">
                                         
                                         <v-list-tile :key="item.title" avatar @click="takeBookData(item.volumeInfo)">
@@ -69,6 +64,21 @@
         
                                      
                                 </v-card>
+                            </v-dialog>
+                            <v-dialog
+                            v-model="savedialog"
+                            hide-overlay
+                            persistent max-width="290"
+                            >
+                            <v-card>
+                                <v-card-text>
+                                Quelle wurde gespeichert
+                                </v-card-text>
+                                <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="green darken-1" flat @click.native="savedialog = false">Ok</v-btn>
+                                </v-card-actions>
+                            </v-card>
                             </v-dialog>
                         <v-layout row wrap v-for="(author,i) of authors" :key="i">
                             <v-flex xs5>
@@ -136,8 +146,10 @@ export default {
   name: 'App',
   data: () => {
     return {
+    savedialog:false,
+    loading:false,
     dialog: false,
-    ISBNsearchterm:'isbn:9783784130309',
+    ISBNsearchterm:'',
     res:'asdasd',
     sourcetyp: 'book',
     erscheinungsjahr:'',
@@ -178,9 +190,12 @@ export default {
   methods: {
         doISBNSerach(){
             if(this.ISBNsearchterm){
+                this.res = [];
+                this.loading = true;
                 axios.get('https://www.googleapis.com/books/v1/volumes?q='+this.ISBNsearchterm).then(function(response){
                     console.log(response.data)
                 this.res = response.data
+                this.loading = false;
                 }.bind(this))
             }
       
@@ -206,6 +221,8 @@ export default {
             console.log(volumeInfo.authors)
       },
       save(){
+          let self = this;
+         
          db.collection('sources').add({
 
                 type:this.sourcetyp,
@@ -218,6 +235,15 @@ export default {
                 verlag:this.verlag,
                 sort:10
             }).then(function() {
+                self.savedialog = true
+                self.sourcetyp = 'book'
+                self.titel= ''
+                self.erscheinungsjahr= ''
+                self.untertitel= ''
+                self.authors = [{ name: '', prename:'' }],
+                self.auflage = '',
+                self.erscheinungsort= ''
+                self.verlag= ''
                 console.log("Document successfully written!");
             });
       },
@@ -239,5 +265,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.searchform{
+    width:100%;
+}
+.toolbar_search{
+    background:rgba(255,255,255,.2);
+    padding:.4rem;
+    font-weight: 100;
+    font-size:1.2rem;
+    width: 90%;
+    margin-top:6px;
+    float: left;
+}
+.toolbar_search:focus{
+ border:none;
+ outline: none;
+}
+.toolbar_search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(21,21,21,.9);
+    opacity: 1; /* Firefox */
+}
 </style>
