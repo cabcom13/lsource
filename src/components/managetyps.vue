@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 <v-toolbar flat dense color="blue lighten-3">
-    <span class="tpt">Typvorlagen bearbeiten</span>
+    <span class="tpt">Formatvorlage bearbeiten</span>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat dense @click="save(ds)">Speichern</v-btn>

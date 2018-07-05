@@ -7,6 +7,7 @@
         <v-btn small flat @click="save()">Speichern</v-btn>
     </v-toolbar-items>
 </v-toolbar>
+
 <v-container grid-list-lg >
     <v-card>
         <v-card-text>
@@ -144,8 +145,13 @@ import axios from 'axios';
 
 export default {
   name: 'App',
+    props: {
+        docid:''
+    },
+
   data: () => {
     return {
+    sources:[],
     savedialog:false,
     loading:false,
     dialog: false,
@@ -153,7 +159,7 @@ export default {
     res:'asdasd',
     sourcetyp: 'book',
     erscheinungsjahr:'',
-    titel:'',
+    titel: '',
     untertitel:'',
     auflage:'',
     erscheinungsort:'',
@@ -171,8 +177,8 @@ export default {
     }
 
   },
-  created: () => {
-   
+  created() {
+   console.log(this.docid)
   },
   computed: {
       authors_str(){
@@ -257,7 +263,7 @@ export default {
   firestore () {
     return {
         ds: db.collection('datatyps').doc('uTqjh8FkQEFz03x434aV'),
-        sources: db.collection('sources')
+        sources: db.collection('sources').doc(this.docid)
     }
   },
 }

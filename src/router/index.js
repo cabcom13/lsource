@@ -22,6 +22,13 @@ export default new Router({
       path: '/addsource',
       name: 'addsource',
       component: addsource
-    },   
+
+    },
+    {
+      path: '/editsource/:docid',
+      name: 'editsource',
+      component: addsource,
+      props: true
+    },  
   ]
 })

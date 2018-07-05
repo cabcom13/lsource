@@ -7,6 +7,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCodeMirror from 'vue-codemirror-lite'
 
+
+
 import VueFire from 'vuefire'
 import 'firebase/firestore'
 
@@ -19,6 +21,7 @@ Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
 Vue.use(VueCodeMirror)
 
+
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import 'codemirror/lib/codemirror.css'
 import './main.css'
@@ -26,6 +29,6 @@ import './main.css'
 var vm = new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: { App},
   template: '<App/>'
 })
